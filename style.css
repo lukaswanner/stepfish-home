@@ -1,0 +1,16 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to bottom, #003092, #080b10);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 0
+}
+
+.fish {
+  position: absolute;
+  width: 100px;
+  height: auto;
+  will-change: transform;
+  visibility: hidden;
+}

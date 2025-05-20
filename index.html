@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tailwind Starter</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="animation.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<header class="p-4 w-full">
+    <ul class="list-none flex flex-row gap-8 pr-8">
+        <li class="mr-auto">
+            <a href="/" class="font-bold text-xl">StepFish</a>
+        </li>
+        <li>
+            <a href="/" class="font-bold text-xl uppercase">home</a>
+        </li>
+        <li>
+            <a href="privacy.html" class="font-bold text-xl uppercase">privacy</a>
+        </li>
+        <li>
+            <a href="/" class="font-bold text-xl uppercase">support</a>
+        </li>
+
+    </ul>
+</header>
+
+<body>
+
+    <main class="p-6 flex-grow">
+        <div class="flex flex-col min-h-[70vh] pb-8 w-full tracking-widest justify-center align-middle">
+            <div class="relative flex flex-col flex-grow justify-center">
+                <h1 class="text-9xl font-extrabold">
+                    Step
+                </h1>
+                <h1 class="text-9xl font-extrabold self-end">
+                    Up
+                </h1>
+            </div>
+        </div>
+        <div class="w-full">
+            <p class="text-center font-bold text-4xl tracking-wider">
+                Earn Little Friends
+            </p>
+        </div>
+        <div class="min-h-[100vh] relative">
+            <img class="fish" id="koi" src="fish/koi-big.png" alt="koi fish">
+            <img class="fish" id="tropical" src="fish/tropical-big.png" alt="tropical fish">
+            <img class="fish" id="fish" src="fish/fish-big.png" alt="fish">
+        </div>
+    </main>
+
+    <footer class="mt-auto p-4 text-center">
+        <p class="text-sm text-gray-500">&copy; 2025 Your Name</p>
+    </footer>
+</body>
+
+</html>
