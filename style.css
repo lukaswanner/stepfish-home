@@ -1,16 +1,93 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        interpolate-size: allow-keywords;
+    }
+}
+
 body {
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(to bottom, #003092, #080b10);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  flex: 1 0 0
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+}
+
+p {
+    text-wrap: pretty;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-wrap: balance;
+}
+
+#root,
+#__next {
+    isolation: isolate;
+}
+
+
+html {
+    color: white
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to bottom, #003092, #080b10);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 0;
 }
 
 .fish {
-  position: absolute;
-  width: 100px;
-  height: auto;
-  will-change: transform;
-  visibility: hidden;
+    position: absolute;
+    width: 100px;
+    height: auto;
+    will-change: transform;
+    visibility: hidden;
+}
+
+.title-fish {
+    position: absolute;
+    width: 40%;
+    transform: translate(-50%, 0%) rotate(23deg);
+    left: 50%
 }
