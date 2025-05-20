@@ -54,38 +54,24 @@ function animateFish(timestamp, fish) {
       animateFish(ts, fish),
     );
   } else {
-    // Hide fish after animation is done
-    fish.style.display = "none";
+    // Animation done
     state.start = null;
     state.animationFrameId = null;
+    fish.style.visibility = "hidden";
+
+    // Add a delay before restarting (500–2000ms)
+    const delay = 500 + Math.random() * 1500;
+    setTimeout(() => {
+      initFish(fish); // Reset position + direction
+      state.animationFrameId = requestAnimationFrame((ts) =>
+        animateFish(ts, fish),
+      );
+    }, delay);
   }
 }
-
-// Set up observer for each fish
-const observer = new IntersectionObserver((entries) => {
-  for (const entry of entries) {
-    const fish = entry.target;
-    const state = fishState.get(fish);
-    if (!state) continue;
-
-    if (entry.isIntersecting) {
-      if (!state.animationFrameId) {
-        state.animationFrameId = requestAnimationFrame((ts) =>
-          animateFish(ts, fish),
-        );
-      }
-    } else {
-      // Cancel animation if fish leaves view
-      if (state.animationFrameId) {
-        cancelAnimationFrame(state.animationFrameId);
-        state.animationFrameId = null;
-      }
-    }
-  }
-});
 
 // Initialize and observe each fish
 [basicFish, koi, tropical].forEach((fish) => {
   initFish(fish);
-  observer.observe(fish);
+  requestAnimationFrame((ts) => animateFish(ts, fish));
 });
