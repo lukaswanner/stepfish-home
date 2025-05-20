@@ -11,21 +11,23 @@ const fishState = new Map();
 function initFish(fish) {
   const swimLeft = Math.random() < 0.5;
   const baseY = Math.random() * (screenHeight * 0.6) + screenHeight * 0.2;
+
+  // Initial position
+  const startX = swimLeft ? screenWidth - fish.clientWidth : -fish.clientWidth;
+  fish.style.transform = `translate(${startX}px, ${baseY}px)`;
+
+  // Hide initially until we animate
+  fish.style.visibility = "hidden";
+
   fishState.set(fish, {
     start: null,
-    swimLeft: swimLeft,
+    swimLeft,
     animationFrameId: null,
     baseY,
     duration: 5000 + Math.random() * 1000,
     waveAmplitude: 20 + Math.random() * 30,
     waveFrequency: 0.005 + Math.random() * 0.003,
   });
-
-  if (swimLeft) {
-    fish.style.transform = `translate(${screenWidth}, ${baseY}px)`;
-  } else {
-    fish.style.transform = `translate(-100px, ${baseY}px`;
-  }
 }
 
 function animateFish(timestamp, fish) {
@@ -34,36 +36,28 @@ function animateFish(timestamp, fish) {
 
   const elapsed = timestamp - state.start;
   const progress = elapsed / state.duration;
-  const x =
-    state && state.swimLeft
-      ? screenWidth - progress * screenWidth
-      : progress * screenWidth;
+
+  const x = state.swimLeft
+    ? screenWidth -
+      fish.clientWidth -
+      progress * (screenWidth + fish.clientWidth)
+    : -fish.clientWidth + progress * (screenWidth + fish.clientWidth);
 
   const y =
     state.baseY + Math.sin(elapsed * state.waveFrequency) * state.waveAmplitude;
 
-  if (state && state.swimLeft) {
-    fish.style.transform = `translate(${x}px, ${y}px)`;
-  } else {
-    fish.style.transform = `translate(${x}px, ${y}px) scaleX(-1)`;
-  }
-
+  fish.style.transform = `translate(${x}px, ${y}px) ${!state.swimLeft ? "scaleX(-1)" : ""}`;
   fish.style.visibility = "visible";
 
-  if (progress < 1) {
+  if (progress <= 1.0) {
     state.animationFrameId = requestAnimationFrame((ts) =>
       animateFish(ts, fish),
     );
   } else {
+    // Hide fish after animation is done
+    fish.style.display = "none";
     state.start = null;
-    // if (state && state.swimLeft) {
-    //   fish.style.transform = `translate(100px, ${y}px)`;
-    // } else {
-    //   fish.style.transform = `translate(-100px, ${y}px)`;
-    // }
-    // state.animationFrameId = requestAnimationFrame((ts) =>
-    //   animateFish(ts, fish),
-    // );
+    state.animationFrameId = null;
   }
 }
 
@@ -75,15 +69,16 @@ const observer = new IntersectionObserver((entries) => {
     if (!state) continue;
 
     if (entry.isIntersecting) {
-      // Reset start and position
-      state.start = null;
-      state.animationFrameId = requestAnimationFrame((ts) =>
-        animateFish(ts, fish),
-      );
+      if (!state.animationFrameId) {
+        state.animationFrameId = requestAnimationFrame((ts) =>
+          animateFish(ts, fish),
+        );
+      }
     } else {
-      // Cancel animation
+      // Cancel animation if fish leaves view
       if (state.animationFrameId) {
         cancelAnimationFrame(state.animationFrameId);
+        state.animationFrameId = null;
       }
     }
   }

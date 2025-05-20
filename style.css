@@ -65,7 +65,8 @@ h6 {
 
 
 html {
-    color: white
+    color: white;
+    overflow-x: hidden;
 }
 
 body {
